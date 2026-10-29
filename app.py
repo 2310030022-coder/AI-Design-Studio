@@ -64,11 +64,20 @@ def build_app():
                 gr.Examples(examples=[['A mysterious fantasy castle above the clouds, magical blue lights','Fantasy','Portrait (poster)'],['A colorful summer music festival banner with abstract shapes','Neon Futuristic','Landscape (banner)'],['Premium perfume advertisement with glass bottle on marble','Luxury','Square (social post)']], inputs=[prompt,style,layout], label='Try an example')
             with gr.Column(scale=6, elem_id='outputpanel'):
                 gr.Markdown('### 🖼️ Your generated artwork')
-                artwork = gr.Image(label='Preview and download', type='pil', interactive=False, show_download_button=True, height=480)
+                artwork = gr.Image(label='Preview and download', type='pil', interactive=False,  height=480)
                 status = gr.Markdown('Your design will appear here after generation.')
         button.click(generate_image, inputs=[prompt,style,layout], outputs=[artwork,status])
         gr.HTML('<div id="footer">Made with Python · OpenAI Image API · Gradio | Course-End Project 2</div>')
     return demo
 
-if __name__ == '__main__':
-    build_app().launch(theme=gr.themes.Soft(primary_hue='purple', secondary_hue='pink'), css=CSS)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    build_app().launch(
+        server_name="0.0.0.0",
+        server_port=port,
+        theme=gr.themes.Soft(
+            primary_hue="purple",
+            secondary_hue="pink"
+        ),
+        css=CSS
+    )
